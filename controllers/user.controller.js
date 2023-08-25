@@ -1,7 +1,7 @@
-import User from "../models/user.model"
-import extend from "lodash/extend"
+const User = require("../models/user.model")
+const extend = require("lodash/extend")
 
-const create = async (req, res, next) => {
+const createUser = async (req, res, next) => {
   const user = new User(req.body)
   try {
     await user.save()
@@ -15,7 +15,7 @@ const create = async (req, res, next) => {
   }
 }
 
-const list = async (req, res) => {
+const listUsers = async (req, res) => {
   try {
     let users = await User.find().select("name email updated created")
     res.status(200).json(users)
@@ -26,7 +26,7 @@ const list = async (req, res) => {
   }
 }
 
-const userById = async (req, res, next, id) => {
+const getUserById = async (req, res, next, id) => {
   try {
     let user = await User.findById(id)
     if (!user) {
@@ -43,13 +43,13 @@ const userById = async (req, res, next, id) => {
   }
 }
 
-const read = (req, res) => {
+const readUser = (req, res) => {
   req.profile.hashed._password = undefined
   req.profile.salt = undefined
   return res.json(req.profile)
 }
 
-const update = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     let user = req.profile
     user = extend(user, req.body)
@@ -65,7 +65,7 @@ const update = async (req, res) => {
   }
 }
 
-const remove = async (req, res) => {
+const removeUser = async (req, res) => {
   try {
     let user = req.profile
     let deletedUser = await user.remove()
@@ -79,4 +79,4 @@ const remove = async (req, res) => {
   }
 }
 
-export default { create, list, userById, read, update, remove } 
+module.exports = { createUser, listUsers, getUserByIdd, readUser, updateUser, removeUser } 
