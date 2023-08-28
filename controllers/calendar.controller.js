@@ -35,7 +35,7 @@ const removeCalendarEvent = async (req, res) => {
     res.status(200).json({
       message: "Event Deleted succesfully"
     })
-  } catchh(err){
+  } catch (err) {
     return res.status(400).json({
       message: err
     })
