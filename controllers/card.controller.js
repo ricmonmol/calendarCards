@@ -37,7 +37,7 @@ const listCards = async (req, res) => {
 const updateCard = async (req, res) => {
   try {
     let cardId = req.params.cardId
-    let updatedCard = await Card.FindByIdAndUpdate(cardId, req.body, { new: true })
+    let updatedCard = await Card.findByIdAndUpdate(cardId, req.body, { new: true })
     if (!updatedCard) {
       return res.status(404).json({
         error: "Card not found"
@@ -50,3 +50,24 @@ const updateCard = async (req, res) => {
     })
   }
 }
+
+const removeCard = async (req, res) => {
+  try {
+    let cardId = req.params.cardId
+    let deletedCard = await Card.findByIdAndDelete(cardId)
+    if (!deletedCard) {
+      return res.status(404).json({
+        message: "Card not found"
+      })
+    }
+    res.status(200).json({
+      message: "Card deleted"
+    })
+  } catch (err) {
+    return res.status(400).json({
+      message: err
+    })
+  }
+}
+
+module.exports = { getAllCards, createCard, listCards, updateCard, removeCard }
