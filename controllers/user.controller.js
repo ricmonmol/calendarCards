@@ -1,7 +1,7 @@
 const User = require("../models/user.model")
 const extend = require("lodash/extend")
 
-const createUser = async (req, res, next) => {
+const createUser = async (req, res) => {
   const user = new User(req.body)
   try {
     await user.save()
