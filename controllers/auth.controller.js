@@ -17,14 +17,14 @@ const signin = async (req, res) => {
           message: "Email and password not match"
         })
       }
-      const token = jwt.sign({ id: user._id }, process.env.JWT, {
-        expiresIn: "1h"
+      const token = jwt.sign({ _id: user._id }, |)
+    } catch (err) {
+      return res.status(401).json({
+        message: err
       })
-      return { token, ...user._doc }
     }
-  } catch (err) {
-    return res.status(401).json({
-      message: err
-    })
   }
-}
+
+const signout = (req, res) => {
+    res.clearCookie("t")
+  }
